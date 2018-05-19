@@ -22,7 +22,7 @@ class Testowa{
 public class Konstruktory {
     public static void main(String[] args) {
         Testowa nowa = new Testowa();
-        System.out.println(nowa.dodaj(5.0, 10.6));
+        System.out.println(nowa.dodaj(5.0f, 10.6f));
     
     }
 }
