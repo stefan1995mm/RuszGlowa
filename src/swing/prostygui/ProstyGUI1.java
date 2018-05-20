@@ -1,4 +1,4 @@
-package swing;
+package swing.prostygui;
 
 import javax.swing.*;
 import java.awt.*;
