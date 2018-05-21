@@ -2,6 +2,10 @@ package muza;
 import java.awt.*;
 import javax.swing.*;
 import javax.sound.midi.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 import java.awt.event.*;
 
@@ -49,6 +53,9 @@ public class MuzMachina implements MetaEventListener{
         tempoD.addActionListener(new MojTempoDListener());
         obszarPrzyciskow.add(tempoD);
 
+        JButton zapisz = new JButton("Zapisz");
+        zapisz.addActionListener(new ZapiszListener());
+        obszarPrzyciskow.add(zapisz);
         Box obszarNazw = new Box(BoxLayout.Y_AXIS);
         for (int i = 0; i < 16; i++) {
             obszarNazw.add(new Label(nazwaInstrumentow[i]));
@@ -175,4 +182,24 @@ public class MuzMachina implements MetaEventListener{
             e.printStackTrace();
         }
         return zdarzenie;}
+        public class ZapiszListener implements ActionListener{
+
+            public void actionPerformed(ActionEvent e){
+                boolean[] stanyPol = new boolean[256];
+
+                for (int i = 0; i < 256; i++) {
+                    JCheckBox pole = (JCheckBox) listaPolWyboru.get(i);
+                    if (pole.isSelected()){
+                        stanyPol[i] = true;
+                    }
+                }
+                try {
+                    FileOutputStream strumienPlk = new FileOutputStream(new File("kompozycja.ser"));
+                    ObjectOutputStream os = new ObjectOutputStream(strumienPlk);
+                    os.writeObject(stanyPol);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        }
 }
